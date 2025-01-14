@@ -1,0 +1,6 @@
+{% if admin.hasAccess('edit', object) and admin.hasRoute('edit') and admin.hasRoute('code') and object.code is null %}
+    <a href="{{ admin.generateObjectUrl('code', object) }}" class="btn btn-sm btn-default" title="Code">
+        <i class="glyphicon glyphicon-refresh"></i>
+        Code
+    </a>
+{% endif %}
