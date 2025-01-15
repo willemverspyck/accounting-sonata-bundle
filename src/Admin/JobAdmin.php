@@ -9,10 +9,12 @@ use Sonata\Form\Type\DatePickerType;
 use Spyck\AccountingBundle\Entity\Job;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 #[AutoconfigureTag('sonata.admin', [
     'manager_type' => 'orm',
     'model_class' => Job::class,
+    'show_in_dashboard' => false,
 ])]
 final class JobAdmin extends AbstractAdmin
 {
@@ -27,6 +29,9 @@ final class JobAdmin extends AbstractAdmin
                     'required' => true,
                 ])
                 ->add('quantity', null, [
+                    'required' => true,
+                ])
+                ->add('amount', MoneyType::class, [
                     'required' => true,
                 ])
                 ->add('date', DatePickerType::class, [

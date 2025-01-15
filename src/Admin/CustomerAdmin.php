@@ -33,6 +33,12 @@ final class CustomerAdmin extends AbstractAdmin
                 ->add('contact', null, [
                     'required' => true,
                 ])
+                ->add('email', null, [
+                    'required' => false,
+                ])
+                ->add('phone', null, [
+                    'required' => false,
+                ])
                 ->add('address', null, [
                     'required' => true,
                 ])
@@ -54,6 +60,8 @@ final class CustomerAdmin extends AbstractAdmin
             ->add('name')
             ->add('code')
             ->add('contact')
+            ->add('email')
+            ->add('phone')
             ->add('address')
             ->add('zipcode')
             ->add('city')
@@ -81,6 +89,8 @@ final class CustomerAdmin extends AbstractAdmin
             ->add('name')
             ->add('code')
             ->add('contact')
+            ->add('email')
+            ->add('phone')
             ->add('address')
             ->add('zipcode')
             ->add('city')
