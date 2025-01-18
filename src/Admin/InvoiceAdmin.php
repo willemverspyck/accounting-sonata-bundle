@@ -8,7 +8,9 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\Form\Type\CollectionType;
 use Sonata\Form\Type\DatePickerType;
 use Spyck\AccountingBundle\Entity\Invoice;
@@ -81,6 +83,9 @@ final class InvoiceAdmin extends AbstractAdmin
                     'code' => [
                         'template' => '@SpyckAccountingSonata/invoice/list_action_code.html.twig',
                     ],
+                    'download' => [
+                        'template' => '@SpyckAccountingSonata/invoice/list_action_download.html.twig',
+                    ],
                 ],
             ]);
     }
@@ -111,5 +116,6 @@ final class InvoiceAdmin extends AbstractAdmin
     protected function getAddRoutes(): iterable
     {
         yield 'code';
+        yield 'download';
     }
 }
