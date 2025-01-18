@@ -16,6 +16,7 @@ use Sonata\Form\Type\DatePickerType;
 use Spyck\AccountingBundle\Entity\Invoice;
 use Spyck\AccountingSonataBundle\Controller\InvoiceController;
 use Spyck\SonataExtension\Filter\DateRangeFilter;
+use Spyck\SonataExtension\Utility\AutocompleteUtility;
 use Spyck\SonataExtension\Utility\DateTimeUtility;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -33,7 +34,15 @@ final class InvoiceAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Fields')
-                ->add('customer', null, [
+                ->add('customer', ModelAutocompleteType::class, [
+                    'callback' => [AutocompleteUtility::class, 'callbackForm'],
+                    'placeholder' => 'Choose customer',
+                    'property' => [
+                        'name',
+                        'contact',
+                        'email',
+                        'city',
+                    ],
                     'required' => true,
                 ])
                 ->add('name', null, [
@@ -53,7 +62,18 @@ final class InvoiceAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
-            ->add('customer')
+            ->add('customer', ModelFilter::class, [
+                'callback' => [AutocompleteUtility::class, 'callbackFilter'],
+                'field_options' => [
+                    'property' => [
+                        'name',
+                        'contact',
+                        'email',
+                        'city',
+                    ],
+                ],
+                'field_type' => ModelAutocompleteType::class,
+            ])
             ->add('name')
             ->add('code')
             ->add('amount')
