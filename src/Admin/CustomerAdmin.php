@@ -6,11 +6,13 @@ namespace Spyck\AccountingSonataBundle\Admin;
 
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Spyck\AccountingBundle\Entity\Customer;
 use Spyck\SonataExtension\Utility\DateTimeUtility;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+use Symfony\Component\Intl\Countries;
 
 #[AutoconfigureTag('sonata.admin', [
     'group' => 'Accounting',
@@ -94,7 +96,9 @@ final class CustomerAdmin extends AbstractAdmin
             ->add('address')
             ->add('zipcode')
             ->add('city')
-            ->add('country')
+            ->add('country', FieldDescriptionInterface::TYPE_CHOICE, [
+                'choices' => Countries::getNames(),
+            ])
             ->add('timestampCreated', null, [
                 'format' => DateTimeUtility::FORMAT_DATETIME,
             ])
