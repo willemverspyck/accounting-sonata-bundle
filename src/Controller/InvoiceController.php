@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Spyck\AccountingSonataBundle\Controller;
 
 use Spyck\AccountingBundle\Entity\Invoice;
+use Spyck\AccountingBundle\Event\CodeEvent;
 use Spyck\AccountingBundle\Event\DownloadEvent;
-use Spyck\AccountingBundle\Service\InvoiceService;
 use Spyck\AccountingSonataBundle\Utility\DataUtility;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,7 @@ final class InvoiceController extends AbstractController
      * @throws AccessDeniedException
      * @throws NotFoundHttpException
      */
-    public function codeAction(InvoiceService $invoiceService): Response
+    public function codeAction(EventDispatcherInterface $eventDispatcher): Response
     {
         $this->admin->checkAccess('edit');
 
@@ -29,7 +29,9 @@ final class InvoiceController extends AbstractController
 
         DataUtility::assert($invoice instanceof Invoice, $this->createNotFoundException('Invoice not found'));
 
-        $invoiceService->patchInvoiceCode($invoice);
+        $codeEvent = new CodeEvent($invoice);
+
+        $eventDispatcher->dispatch($codeEvent);
 
         $this->addFlash('sonata_flash_success', 'The invoice has been generated.');
 
