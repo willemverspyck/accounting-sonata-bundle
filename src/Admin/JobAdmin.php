@@ -23,7 +23,7 @@ final class JobAdmin extends AbstractAdmin
         $formMapper
             ->with('Fields')
                 ->add('name', null, [
-                    'required' => true,
+                    'required' => false,
                 ])
                 ->add('service', null, [
                     'required' => true,
